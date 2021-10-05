@@ -25,19 +25,16 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     labels:
       traefik.enable: true
-
       # Routers 
       traefik.http.routers.traefik.rule: Host(`${PORTAINER_TRAEFIK_URL}`)
       traefik.http.routers.traefik.entrypoints: websecure
       traefik.http.routers.traefik.service: api@internal
       traefik.http.routers.traefik.tls.certresolver: letsencrypt
       traefik.http.routers.traefik.middlewares: traefik-auth
-
       # Global redirect to HTTPS
       traefik.http.routers.http-catchall.rule: hostregexp(`{host:.+}`)
       traefik.http.routers.http-catchall.entrypoints: web
-      traefik.http.routers.http-catchall.middlewares: redirect-to-https
-      
+      traefik.http.routers.http-catchall.middlewares: redirect-to-https      
       # Middleware Redirect
       traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
 
@@ -56,6 +53,16 @@ services:
       traefik.http.routers.letsencrypt.tls.certresolver: letsencrypt
       traefik.http.routers.letsencrypt.service: portainer
       traefik.http.services.portainer.loadBalancer.server.port: 9000
+      
+   portainer_agent:
+    image: portainer/agent
+    container_name: agent
+    ports:
+      - 9001:9001
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    restart: always
 
 volumes:
   portainer_data:
