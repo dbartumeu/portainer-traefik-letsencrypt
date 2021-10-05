@@ -12,7 +12,7 @@ This repository will help you set up Portainer served by Traefik v2.1.6 over HTT
 
 Simply `git clone` the repository into your server's directory.
 
-`git clone https://github.com/AxelPina/portainer-traefik-letsencrypt.git`
+`https://github.com/dbartumeu/portainer-traefik-letsencrypt`
 
   Apply permissions to be able to edit the `.env`.
 
@@ -57,14 +57,4 @@ portainer_agent:
       - /var/lib/docker/volumes:/var/lib/docker/volumes
     restart: always
 ```
-
-## Upgrading to Portainer 2.0 (Optional)
-
-Portainer has released 2.0 (Aug. 31st 2020) as `portainer/portainer-ce` to ensure auto-updaters (like watchtower) don't expose users to risks by automatically updating on release.
-
-To upgrade simply switch the image in the `.yml` to `portainer/portainer-ce`.
-
-~~**WARNING:** Migrating to this version with external endpoints defined will render them un-manageable.~~
-
-**Note:** As of Portainer Community Edition v2.1.1 external endpoints seem to be manageable. *(I recently tested this out, not sure if this was fixed in earlier versions of 2.0, if that's the case I apologize in advance)*
 
